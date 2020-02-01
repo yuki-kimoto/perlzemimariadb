@@ -1,4 +1,4 @@
-<h2>MariaDBで、テーブルの容量とデータベースの容量を確認する</h2>
+<h2>MariaDBでテーブルの容量とデータベースの容量を確認する</h2>
 
 MariaDBで、テーブルの容量とデータベースの容量を確認する方法です。
 
@@ -10,51 +10,62 @@ MariaDBでデータベースを運用していると、ログを書き込んで�
 
 <h3>テーブルの容量を確認</h3>
 
-テーブルの容量を確認するSQLです。
+テーブルの容量を確認するSQLです。データ容量、インデックス容量、それらを足した総容量を表示しています。テーブルの行数(table_rows)と、列の平均サイズ(avg_row_length)も合わせて表示しています。合計サイズの降順でソートしています。
 
 <pre>
-SELECT  
-    table_name, engine, table_rows AS tbl_rows,
-    avg_row_length AS rlen,  
-    floor((data_length+index_length)/1024/1024) AS allmb,  #総容量
-    floor((data_length)/1024/1024) AS dmb,  #データ容量
-    floor((index_length)/1024/1024) AS imb   #インデックス容量
-FROM 
-    information_schema.tables  
-WHERE
-    table_schema=database()  
-ORDER BY
-    (data_length+index_length) DESC;
+# テーブルの容量を確認するSQL
+select  
+  table_name,
+  floor((data_length+index_length)/1024/1024) as total_size_MB,
+  floor((data_length)/1024/1024) as data_size_MB,
+  floor((index_length)/1024/1024) as index_size_MB,
+  table_rows,
+  avg_row_length
+from 
+  information_schema.tables  
+where
+  table_schema=database()  
+order by
+  (data_length+index_length) desc
+;
 </pre>
 
+テーブルの容量を確認するSQLの出力結果のサンプルです。
 
+<pre>
++----------------------------+---------------+--------------+---------------+------------+----------------+
+| table_name                 | total_size_MB | data_size_MB | index_size_MB | table_rows | avg_row_length |
++----------------------------+---------------+--------------+---------------+------------+----------------+
+| book                       |           304 |          179 |           125 |     344669 |            547 |
+| author                     |           157 |          104 |            52 |    1212336 |             90 |
+| publisher                  |           138 |          138 |             0 |    2467485 |             58 |
++----------------------------+---------------+--------------+---------------+------------+----------------+
+</pre>
 
+<h3>データベースの容量を確認</h3>
 
+データベースの容量を確認するSQLです。テーブルの容量を合計することによって求めています。
 
-MySQL
-SQL
-データベース
-メモ。たまにコピペして使います。
+<pre>
+# データベースの容量を確認するSQLDBのサイズ
+select 
+  table_schema, floor(sum(data_length)/1024/1024) as database_size_MB
+from 
+  information_schema.tables  
+group by 
+  table_schema 
+order by       
+  sum(data_length+index_length) desc
+;
+</pre>
 
-DBのサイズ
-SELECT 
-    table_schema, sum(data_length) /1024/1024 AS mb 
-FROM 
-    information_schema.tables  
-GROUP BY 
-    table_schema 
-ORDER BY       
-    sum(data_length+index_length) DESC;
-Tableのサイズ
-SELECT  
-    table_name, engine, table_rows AS tbl_rows,
-    avg_row_length AS rlen,  
-    floor((data_length+index_length)/1024/1024) AS allmb,  #総容量
-    floor((data_length)/1024/1024) AS dmb,  #データ容量
-    floor((index_length)/1024/1024) AS imb   #インデックス容量
-FROM 
-    information_schema.tables  
-WHERE
-    table_schema=database()  
-ORDER BY
-    (data_length+index_length) DESC;  
+データベースの容量を確認する出力結果のサンプルです。
+
+<pre>
++--------------------+------------------+
+| table_schema       | database_size_MB |
++--------------------+------------------+
+| perlzemi           |              660 |
+| kimoto_system      |               50 |
++--------------------+------------------+
+</pre>
