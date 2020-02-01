@@ -1,0 +1,60 @@
+<h2>MariaDBで、テーブルの容量とデータベースの容量を確認する</h2>
+
+MariaDBで、テーブルの容量とデータベースの容量を確認する方法です。
+
+MariaDBでデータベースを運用していると、ログを書き込んでいるテーブルなど、容量がどんどん増えてきますね。
+
+定期的に不要な過去のログのデータを削除したい場合など、テーブルの容量を確認できると便利です。
+
+データベース全体の容量を確認できるコマンドを合わせて紹介します。
+
+<h3>テーブルの容量を確認</h3>
+
+テーブルの容量を確認するSQLです。
+
+<pre>
+SELECT  
+    table_name, engine, table_rows AS tbl_rows,
+    avg_row_length AS rlen,  
+    floor((data_length+index_length)/1024/1024) AS allmb,  #総容量
+    floor((data_length)/1024/1024) AS dmb,  #データ容量
+    floor((index_length)/1024/1024) AS imb   #インデックス容量
+FROM 
+    information_schema.tables  
+WHERE
+    table_schema=database()  
+ORDER BY
+    (data_length+index_length) DESC;
+</pre>
+
+
+
+
+
+MySQL
+SQL
+データベース
+メモ。たまにコピペして使います。
+
+DBのサイズ
+SELECT 
+    table_schema, sum(data_length) /1024/1024 AS mb 
+FROM 
+    information_schema.tables  
+GROUP BY 
+    table_schema 
+ORDER BY       
+    sum(data_length+index_length) DESC;
+Tableのサイズ
+SELECT  
+    table_name, engine, table_rows AS tbl_rows,
+    avg_row_length AS rlen,  
+    floor((data_length+index_length)/1024/1024) AS allmb,  #総容量
+    floor((data_length)/1024/1024) AS dmb,  #データ容量
+    floor((index_length)/1024/1024) AS imb   #インデックス容量
+FROM 
+    information_schema.tables  
+WHERE
+    table_schema=database()  
+ORDER BY
+    (data_length+index_length) DESC;  
