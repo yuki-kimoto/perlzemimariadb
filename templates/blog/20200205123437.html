@@ -1,0 +1,19 @@
+<h2>外部キー制約を削除する</h2>
+
+外部キー制約を削除するには「alter table drop foreign key」コマンドを実行します。
+
+<pre>
+alter table テーブル名 drop foreign key 外部キー制約名
+</pre>
+
+bookテーブルのbook_ibfk_1という外部キー制約を削除するサンプルです。
+
+<pre>
+alter table book drop foreign key book_ibfk_1
+</pre>
+
+どのような外部キー制約が設定されているかを確認する場合は、以下の記事を参考にしてください。
+
+<ul>
+  <li><a href="/blog/20200205123437.html">外部キー制約を確認する</a></li>
+</ul>
