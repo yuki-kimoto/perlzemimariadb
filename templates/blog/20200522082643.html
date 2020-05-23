@@ -2,17 +2,17 @@
 
 ユーザーにパスワードとデータベースとテーブルの権限を設定するには、grantコマンドを使用します。
 
-あるユーザーには、すべての権限、あるユーザーには、SELECT権限だけを与えるということができます。<a href="/blog/20200523082643.html">ユーザーの作成</a>は事前に行っておきましょう。
+あるユーザーには、すべての権限、あるユーザーには、select権限だけを与えるということができます。<a href="/blog/20200523082643.html">ユーザーの作成</a>は事前に行っておきましょう。
 
 また、このデータベースのすべてのテーブルの権限という設定を行うことができます。
 
-GRANTコマンドの構文です。
+grantコマンドの構文です。
 
 <pre>
-GRANT 権限タイプ ON データベース名.テーブル名 TO 'ユーザー名'@'ホスト名' IDENTIFIED BY 'パスワード';
+grant 権限タイプ on データベース名.テーブル名 to 'ユーザー名'@'ホスト名' identified by 'パスワード';
 </pre>
 
-権限タイプには、ALTER TABLEなどを含めてすべての権限を与える「ALL」、INSERT権限だけを与える「INSERT」、UPDATE権限だけを与える「UPDATE」、DELETE権限だけを与える「DELTE」、SELECT権限だけを与える「SELECT」などがあります。
+権限タイプには、alter tableなどを含めてすべての権限を与える「all」、insert権限だけを与える「insert」、update権限だけを与える「update」、delete権限だけを与える「delte」、select権限だけを与える「select」などがあります。
 
 権限タイプは、「,」を使って複数並列して指定できます
 
@@ -20,28 +20,28 @@ GRANT 権限タイプ ON データベース名.テーブル名 TO 'ユーザー�
 
 ユーザー名とホスト名とパスワードは文字列です。
 
-ホスト名は、ローカルからのみアクセスする場合は「%」、特定リモートからアクセスする場合は、そのリモートの「IPアドレス」を指定しましょう。ローカルとリモートからのすべてのアクセスを指定する場合は「%」という文字列が使えます。一般的には、アクセス制御を、MariaDBの機能ではなく、ファイアーウォールを使って行うので「%」でもよいでしょう。
+ホスト名は、ローカルからのみアクセスする場合は「%」、特定リモートからアクセスする場合は、そのリモートの「ipアドレス」を指定しましょう。ローカルとリモートからのすべてのアクセスを指定する場合は「%」という文字列が使えます。一般的には、アクセス制御を、mariadbの機能ではなく、ファイアーウォールを使って行うので「%」でもよいでしょう。
 
 <h3>すべての権限を与える</h3>
 
 特定のデータベースのすべてのテーブルにすべての権限を与える。
 
 <pre>
-GRANT ALL ON mydatabase.* TO 'kimotoall'@'%' IDENTIFIED BY 'eifjutAB&';
+grant all on mydatabase.* to 'kimotoall'@'%' identified by 'eifjutab&';
 </pre>
 
-<h3>アプリケーション用にINSERT,UPDATE,DELETE,SELECTを許可する</h3>
+<h3>アプリケーション用にinsert,update,delete,selectを許可する</h3>
 
-特定のデータベースのすべてのテーブルにINSERT,UPDATE,DELETE,SELECT権限を与える。
+特定のデータベースのすべてのテーブルにinsert,update,delete,select権限を与える。
 
 <pre>
-GRANT INSERT,UPDATE,DELETE,SELECT ON mydatabase.* TO 'kimotoapp'@'%' IDENTIFIED BY 'eifjutAB&';
+grant insert,update,delete,select on mydatabase.* to 'kimotoapp'@'%' identified by 'eifjutab&';
 </pre>
 
-<h3>参照用にSELECTのみを許可する</h3>
+<h3>参照用にselectのみを許可する</h3>
 
-特定のデータベースのすべてのテーブルにSELECT権限を与える。
+特定のデータベースのすべてのテーブルにselect権限を与える。
 
 <pre>
-GRANT SELECT ON mydatabase.* TO 'kimotoselect'@'%' IDENTIFIED BY 'eifjutAB&';
+grant select on mydatabase.* to 'kimotoselect'@'%' identified by 'eifjutab&';
 </pre>
