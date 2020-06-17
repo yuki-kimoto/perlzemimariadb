@@ -1,0 +1,34 @@
+<h2>rootのパスワードを設定する</h2>
+
+rootのパスワードを設定する方法を解説します。
+
+MariaDBの初期状態ではrootパスワードが設定されていません。次の手順で、rootパスワードを設定しましょう。
+
+設定されていない場合は、だれもで、データベースに対するすべての操作を行うことができ、高いセキュリティリスクが伴います。
+
+まずrootユーザーで、パスワードなしで、<a href="/blog/20200309102346.html">MariaDBデータベースに接続</a>します。
+
+<pre>
+mysql -uroot
+</pre>
+
+データベースを「mysql」に変更します。
+
+<pre>
+use mysql
+</pre>
+
+rootパスワードを設定します。
+
+<pre>
+update user set authentication_string=password('ghrudifA!&') where user='root';
+flush privileges;
+</pre>
+
+<h3>rootパスワードを忘れてしまった場合</h3>
+
+rootパスワードを忘れてしまった場合は、以下の手順を実行してください。
+
+<ul>
+  <li><a href="/blog/20200617142021.html">rootのパスワードを再設定する</a></li>
+</ul>
