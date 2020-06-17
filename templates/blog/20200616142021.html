@@ -18,10 +18,12 @@ mysql -uroot
 use mysql
 </pre>
 
+<h3>rootパスワードの設定</h3>
+
 rootパスワードを設定します。
 
 <pre>
-update user set authentication_string=password('ghrudifA!&') where user='root';
+update user set Password=password('ghrudifA!&') where User='root';
 flush privileges;
 </pre>
 
@@ -32,3 +34,9 @@ rootパスワードを忘れてしまった場合は、以下の手順を実行�
 <ul>
   <li><a href="/blog/20200617142021.html">rootのパスワードを再設定する</a></li>
 </ul>
+
+<h3>MySQLとMariaDBのrootパスワード設定の差分</h3>
+
+MySQL 5.7.6以降はrootのパスワード設定は、Passwordフィールドがなくなり、authentication_stringフィールドを使って行うようです。
+
+2020年6月17日に試したMariaDB 10.1.44では、Passwordフィールドがあり、設定できました。
