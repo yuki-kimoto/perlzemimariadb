@@ -1,0 +1,13 @@
+<h2>replace関数 - 文字列を置換する</h2>
+
+文字列を置換したい場合はreplace関数を使用します。戻り値は、置換後の文字列です。
+
+<pre>
+replace(対象の文字列,置換したい文字列,置換後の文字列)
+</pre>
+
+replace関数でハイフンをアンダースコアに変える場合のSQLのサンプルです。
+
+<pre>
+update book set code = replace(code, "-", "_") where id = 1;
+</pre>
