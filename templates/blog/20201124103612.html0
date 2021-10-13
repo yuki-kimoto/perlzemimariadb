@@ -1,0 +1,16 @@
+<h2>update文 - 行の更新</h2>
+
+update文を使うと行の更新ができます。
+
+<pre>
+# update文 - 行の更新</h2>
+update テーブル名 set フィールド名1 = 値1, フィールド名2 = 値2, ... where 条件;
+</pre>
+
+行を更新する場合は、whereで条件を付けるのが、基本です。where句がないとすべての行が更新されます(ぞぞぞっ、データベース復旧)。
+
+行を更新する場合のサンプルです。
+
+<pre>
+update book set name = 'Perl', price = 3000 where id = 1;
+</pre>

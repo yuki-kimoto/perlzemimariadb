@@ -1,0 +1,67 @@
+<h2>MariaDBデータベースに接続する</h2>
+
+MariaDBデータベースに接続してみましょう。MariaDBデータベースに接続するにはmysqlコマンドを使用します。
+
+<pre>
+mysql -uユーザー名 -p データベース名
+</pre>
+
+ユーザー名が「kimoto」で、データベース名が「kimotosystem」だった場合は、以下のようになります。
+
+<pre>
+mysql -ukimoto -p kimotosystem
+</pre>
+
+パスワードを聞かれるので、入力すると接続できます。
+
+<h3>ポート番号を指定して、データベースに接続する</h3>
+
+MariaDBのポート番号が、MariaDBのデフォルトのポート番号と異なる場合は、ポート番号を指定して接続しましょう。
+
+<pre>
+mysql -ukimoto -P 3306 -p kimotosystem
+</pre>
+
+<h3>ホスト名を指定して、データベースに接続する</h3>
+
+ホスト名を指定して、データベースに接続してみましょう。データベースが、リモートに存在する場合は、リモートのホスト名(ドメイン名かIPアドレス)を指定して接続できます。
+
+<pre>
+mysql -h kimotosystem.mariadb.database.azure.com -ukimoto -p kimotosystem
+</pre>
+
+<h3>ホスト名を開発用と本番用で切り替える</h3>
+
+ホスト名を開発用のデータベースと、本番用のデータベースで切り替えるには、どうすればよいのでしょうか?
+
+一番簡単な方法は、環境変数で定義して、環境変数に応じて設定ファイルを変更可能なWebフレームワークを使用することです。
+
+<h4>環境変数を定義</h4>
+
+まず、環境変数を定義しましょう。<a href="https://linux.perlclub.net/">Linux</a>でbashを使っている場合は「~/.bashrc」に定義します。
+
+<pre>
+# 開発環境
+MYAPP_DATABASE_HOST=kimotosystem-devel.mariadb.database.azure.com
+</pre>
+
+<pre>
+# 本番環境
+MYAPP_DATABASE_HOST=kimotosystem.mariadb.database.azure.com
+</pre>
+
+<h4>設定ファイル</h4>
+
+たとえば、<a href="https://webapp.perlzemi.com/">Mojolicious</a>の設定ファイル「myapp.conf」でこうする。
+
+<pre>
+my $host = $ENV{MYAPP_DATABASE_HOST};
+{
+  # Database
+  db_dsn => "dbi:mysql:database=kimotosystem;host=$host",
+}
+</pre>
+
+こんな記述ができるのは「myapp.conf」が、実際は設定ファイルではなく、ハッシュリファレンスを返すPerlプログラムだからです。
+
+プログラム可能な設定ファイルを持っているWebフレームワークを使うことで、データベースのホスト名を、開発環境と、本番環境で、簡単に切り替えることができます。

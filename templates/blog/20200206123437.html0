@@ -1,0 +1,16 @@
+<h2>外部キー制約を確認する</h2>
+
+外部キー制約を確認するには「show create table」コマンドを実行して「CONSTRAINT ～ FOREIGN KEY」を確認します。
+
+<pre>
+show create table book;
+</pre>
+
+出力結果のサンプルです。外部キー制約が設定されているのが確認できます。
+
+<pre>
+CREATE TABLE `book` (
+  ...
+  CONSTRAINT `book_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `author` (`id`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+</pre>

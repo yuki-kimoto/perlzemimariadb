@@ -1,0 +1,16 @@
+<h2>日付時刻を表すdatetime型の現在時刻での初期化と更新</h2>
+
+日付時刻を表すdatetime型の現在時刻での初期化と更新する設定を解説します。MariaDB 10以降で利用できます(おそらく)。
+
+「default current_timestamp」を指定すると行が作成されたときの時刻で初期化できます。
+
+「on update current_timestamp」を指定すると行が更新されたときの時刻で更新できます。
+
+<pre>
+create table(
+  ...
+  created_at datetime not null default current_timestamp,
+  updated_at datetime not null default current_timestamp on update current_timestamp
+  ...
+)
+</pre>

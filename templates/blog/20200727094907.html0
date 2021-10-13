@@ -1,0 +1,19 @@
+<h2>SQLモード「sql_mode」を確認する</h2>
+
+SQLモード「sql_mode」の値を確認するには、グローバル変数の「sql_mode」を確認します。
+
+<pre>
+select @@GLOBAL.sql_mode;
+</pre>
+
+出力されたSQLモードの例です。
+
+<pre>
+STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+</pre>
+
+SQLモード「sql_mode」につては、以下の記事も参考にしてください。
+
+<ul>
+  <li><a href="/blog/20200624110822.html">SQLモード「STRICT_TRANS_TABLES」を無効にする</a></li>
+</ul>

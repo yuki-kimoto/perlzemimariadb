@@ -1,0 +1,25 @@
+<h2>テーブルの一覧を表示する</h2>
+
+テーブルの一覧を表示するには「SHOW TABLES FROM」構文を使用します。
+
+<pre>
+SHOW TABLES FROM データベース名;
+</pre>
+
+「kimotosystem」というデータベース名のテーブル一覧を表示するサンプルです。
+
+<pre>
+SHOW TABLES FROM kimotosystem;
+</pre>
+
+出力結果のサンプルです。
+
+<pre>
++----------------------------+
+| Tables_in_kimotosystem     |
++----------------------------+
+| book                       |
+| author                     |
+| publisher                  |
++----------------------------+
+</pre>

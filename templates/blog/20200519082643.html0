@@ -1,0 +1,15 @@
+<h2>データベースを削除する - drop database文</h2>
+
+データベースを削除するには「drop database」文を使用します。
+
+データベースを削除すると、含まれるテーブルもすべて削除されるので、気をつけてください。
+
+<pre>
+drop database データベース名;
+</pre>
+
+データベースを削除するサンプルです。
+
+<pre>
+drop database mydatabase;
+</pre>
